@@ -1,20 +1,25 @@
 import pandas as pd
-from Objects import LoanDefaultPredictionRequest
+from Objects.response import Response
 
 
-def input_as_dataframe(request: LoanDefaultPredictionRequest):
-    upper_case_dict = {k.upper(): v for k, v in request.dict().items()}
-    input_df = pd.DataFrame.from_dict(upper_case_dict, orient='columns')
-    print(input_df)
+def input_as_dataframe(request_dict):
+    input_df = pd.DataFrame([request_dict])
+    input_df = input_df[['LOAN', 'DEBTINC']]
     return input_df
 
 
-def predict(model, df):
-    input = df.copy()
-    if input['DEBTINC']:
-        input['DEBTINC_missing_values_flag'] = False
+def predict_with_model(model, df):
+    if df['DEBTINC'][0] is None:
+        df['DEBTINC'] = 34
+        df['DEBTINC_missing_values_flag'] = True
     else:
-        input['DEBTINC'] = 34
-        input['DEBTINC_missing_values_flag'] = True
-    print(input)
-    return model.predict(input)
+        df['DEBTINC_missing_values_flag'] = False
+    print(df)
+    return model.predict(df), model.predict_proba(df)
+
+
+def deserialize_response(labels, probabilities):
+    print(labels)
+    print(probabilities)
+    response = Response(bad=labels[0], goodProb=probabilities[0][0], badProb=probabilities[0][1])
+    return response
