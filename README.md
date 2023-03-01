@@ -10,7 +10,7 @@ The core dataset is the Home Equity (hmeq) dataset.
 
 ## Repository Content:
 
-- FastAPI endpoints that exposes each recommender
+- FastAPI endpoints that exposes each model
 - Dockerized for distribution and scaling
 - 3 tree-based models saved to container, load on inference time for predictions
 
