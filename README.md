@@ -12,6 +12,7 @@ The core dataset is the Home Equity (hmeq) dataset.
 
 - FastAPI endpoints that exposes each recommender
 - Dockerized for distribution and scaling
+- 3 tree-based models saved to container, load on inference time for predictions
 
 ## Model-side TODOs:
 
@@ -21,5 +22,4 @@ The core dataset is the Home Equity (hmeq) dataset.
 
 ## System-side TODOs:
 
-- At inference time, retrieve latest stored model for fast prediction
 - If there is a way to get / generate meaningful new data, add model re-train functionalities and backend storage
